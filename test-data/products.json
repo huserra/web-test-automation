@@ -1,0 +1,44 @@
+[
+  {
+    "name": "biberon",
+    "category": "feeding",
+    "expectedResults": 10,
+    "description": "Bebek beslenme ürünleri",
+    "tags": ["feeding", "baby", "bottle"]
+  },
+  {
+    "name": "oyuncak",
+    "category": "toys",
+    "expectedResults": 15,
+    "description": "Bebek oyuncakları",
+    "tags": ["toys", "play", "entertainment"]
+  },
+  {
+    "name": "giyim",
+    "category": "clothing",
+    "expectedResults": 20,
+    "description": "Bebek giyim ürünleri",
+    "tags": ["clothing", "fashion", "baby"]
+  },
+  {
+    "name": "bebek arabası",
+    "category": "strollers",
+    "expectedResults": 5,
+    "description": "Bebek arabaları ve pusetler",
+    "tags": ["stroller", "transport", "baby"]
+  },
+  {
+    "name": "emzik",
+    "category": "feeding",
+    "expectedResults": 8,
+    "description": "Bebek emzikleri",
+    "tags": ["pacifier", "feeding", "comfort"]
+  },
+  {
+    "name": "bebek bezi",
+    "category": "hygiene",
+    "expectedResults": 12,
+    "description": "Bebek bezleri ve hijyen ürünleri",
+    "tags": ["diaper", "hygiene", "care"]
+  }
+]

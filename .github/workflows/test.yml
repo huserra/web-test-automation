@@ -1,0 +1,113 @@
+name: E-bebek Web Automation Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+      
+    - name: Create .env file
+      run: |
+        echo "USER_EMAIL=test@example.com" >> .env
+        echo "USER_PASSWORD=testpassword" >> .env
+        echo "BASE_URL=https://www.e-bebek.com" >> .env
+        echo "HEADLESS=true" >> .env
+        
+    - name: Run smoke tests
+      run: npm run test:smoke
+      env:
+        CI: true
+        
+    - name: Run search tests
+      run: npm run test:search
+      env:
+        CI: true
+        
+    - name: Generate Allure Report
+      if: always()
+      run: |
+        npm run allure:generate
+        
+    - name: Upload Allure Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results-${{ matrix.node-version }}
+        path: allure-results/
+        retention-days: 30
+        
+    - name: Upload Screenshots
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: screenshots-${{ matrix.node-version }}
+        path: screenshots/
+        retention-days: 7
+        
+    - name: Upload Videos
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: videos-${{ matrix.node-version }}
+        path: videos/
+        retention-days: 7
+
+  allure-report:
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download Allure Results
+      uses: actions/download-artifact@v4
+      with:
+        name: allure-results-18.x
+        path: allure-results/
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Generate Allure Report
+      run: npm run allure:generate
+      
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./allure-report
+        destination_dir: allure-report

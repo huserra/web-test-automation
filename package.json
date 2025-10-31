@@ -1,0 +1,69 @@
+{
+  "name": "web-automation",
+  "version": "1.0.0",
+  "description": "E-bebek e-commerce website automation test suite using Cucumber + Playwright + JavaScript",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js --config cucumber.js",
+    "test:headed": "cross-env HEADLESS=false cucumber-js --config cucumber.js",
+    "test:smoke": "cucumber-js --config cucumber.js --tags @smoke",
+    "test:login": "cucumber-js --config cucumber.js --tags @login",
+    "test:cart": "cucumber-js --config cucumber.js --tags @cart",
+    "test:search": "cucumber-js --config cucumber.js --tags @search",
+    "test:critical": "cucumber-js --config cucumber.js --tags @critical",
+    "test:performance": "cucumber-js --config cucumber.js --tags @performance",
+    "test:data-driven": "cucumber-js --config cucumber.js --tags @data-driven",
+    "test:error-handling": "cucumber-js --config cucumber.js --tags @error-handling",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "clean": "rimraf screenshots debug reports results videos allure-results allure-report",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "install:browsers": "npx playwright install",
+    "postinstall": "npx playwright install"
+  },
+  "keywords": [
+    "automation",
+    "testing",
+    "cucumber",
+    "playwright",
+    "javascript",
+    "e-commerce",
+    "e-bebek",
+    "bdd",
+    "allure"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@cucumber/cucumber": "^10.0.2",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.47.2"
+  },
+  "devDependencies": {
+    "allure-commandline": "^2.29.0",
+    "allure-cucumberjs": "^2.0.0",
+    "@cucumber/pretty-formatter": "^1.0.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": ""
+}
+
